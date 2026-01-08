@@ -86,6 +86,27 @@ let spaceData = {
 // - sends back the earth object when the client goes to /earth
 // - sends back the first planet when the client goes to /planets/1
 // - sends back a 404 page for all other paths
+app.use((req,res,next)=>{
+    console.log(req.method+"/"+req.url)
+    next()
+})
+app.get("/",(req,res)=>{
+    res.send("Welcome to the Spce API")
+})
+app.use((req,res,next)=>{
+    console.log(req.method+"/"+req.url)
+    next()
+})
+app.get("/earth",(req,res)=>{
+    res.send(spaceData.planets[2])
+})
+app.use((req,res,next)=>{
+    console.log(req.method+"/"+req.url)
+    next()
+})
+app.get("/planets/1",(req,res)=>{
+    res.send(spaceData.planets[0])
+})
 
 // ON YOUR OWN
 // - sends back the entire planets array when the client goes to /planets
@@ -93,10 +114,21 @@ let spaceData = {
 // - sends back the second planet when the client goes to /planets/2
 // - sends back the third planet when the client goes to /planets/3
 
-
-
-
-
+app.get("/planets",(req,res)=>{
+    res.send(spaceData.planets)
+})
+app.get("/space",(req,res)=>{
+    res.send(spaceData.astronauts_in_space)
+})
+app.get("/planets/2",(req,res)=>{
+    res.send(spaceData.planets[1])
+})
+app.get("/planets/3",(req,res)=>{
+    res.send(spaceData.planets[2])
+})
+app.use((req,res,next)=>{
+    res.status(404).send("404 Not Found")
+})
 app.listen(3000, () => {
     console.log("Server running")
 })
